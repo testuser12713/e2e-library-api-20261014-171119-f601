@@ -1,0 +1,1 @@
+"""Stadtbibliothek loan API package."""
