@@ -1,0 +1,32 @@
+{
+  "runcontract": 1,
+  "services": [
+    {
+      "name": "api",
+      "dir": ".",
+      "stack": "python",
+      "kind": "server",
+      "install": [
+        ["${python}", "-m", "pip", "install", "-q", "-r", "requirements.txt"]
+      ],
+      "start": [
+        "${python}", "-m", "uvicorn", "app.main:app", "--port", "${PORT}"
+      ],
+      "test": [
+        ["${python}", "-m", "pytest", "-q"]
+      ],
+      "port": 8000,
+      "port_env": "PORT",
+      "health": {
+        "path": "/health",
+        "expect_status": [200]
+      },
+      "env": {
+        "LIBRARY_API_KEY": {
+          "generate": "hex",
+          "bytes": 32
+        }
+      }
+    }
+  ]
+}
